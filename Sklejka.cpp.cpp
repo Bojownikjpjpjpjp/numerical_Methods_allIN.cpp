@@ -10,8 +10,37 @@
 
 using namespace std;
 
+void licz_funkcje(double** baza, double* wspolczynniki_ukladu) {
+
+}
 int main()
 {
+#pragma region Ortogonalizacje
+	//baza funkcji. całość w postaci wielomianu :a0*1, a1*x, a2*x^2...a4*x^4
+	//tworzenie bazy
+	double** bazaF;
+	bazaF = new double* [5];
+	for (int i = 0; i < 5; i++) {
+		bazaF[i] = new double [5];
+	}
+	//zerowanie bazy
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			bazaF[i][j] = 0.0;
+		}
+	}
+	//poszczególne współczynniki na diagonalnej =1, dla reszty =0
+	bazaF[0][0] = 1;
+	bazaF[1][1] = 1;
+	bazaF[2][2] = 1;
+	bazaF[3][3] = 1;
+	bazaF[4][4] = 1;
+	
+	double* wspolczynniki_ukladu = new double[5];
+	
+#pragma endregion
+
+
 #pragma region rozwiazanie_ukladu_rownan_gaussem
 	/*
 	double** A;//tworzenie tablicy 6x5 - transponowana jest
@@ -229,5 +258,5 @@ cout << wynik << endl;
 */
 #pragma endregion
 
-
+return 0;
 }
