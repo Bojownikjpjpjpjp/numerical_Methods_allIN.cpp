@@ -9,10 +9,16 @@
 #include "Kwadratury_Gaussa.h"
 
 using namespace std;
+double f(double T, double alfa, double beta) {
+	return (alfa*(pow(T,4)-beta));
+}
+
+#pragma region Ortogonalizacja_funkcje
+/*
+
 double(*f[6])(double);
 double(*g[6])(double, double**, int, int);
-
-
+*/
 #pragma region Funkcje_przestrzeni_F
 double f0(double x) {
 	return pow(x, 0);
@@ -173,10 +179,39 @@ double licz_wspolczynniki(double** bazaF, double** bazaG, double a, double b, do
 	}
 	return suma;
 }
+
+#pragma endregion
 int main()
 {
+#pragma region rownania_rozniczkowe
+	// dT/dt=alfa(T^4-beta) //y'=f(x,y)
+	// T(t)= alfa(T^4-beta)=f(y)
+	//T(0)=T0=1200K
+	// T po 300 sekundach
+	double T = 1200;
+	double t = 0;
+	double h = 0.1;
+	double alfa = -1e-12;
+	double beta = 0;
+	ofstream zapis("wyniki_rr.txt");
+	zapis << "czas,temperatura";
+	zapis << "0,0";
+	for (t; t < 300; t += h) {
+		T = (T+(h*(f(T, alfa, beta))));
+		zapis << "\n" << t << "," << T;
+		cout << "\nT = " << T;
+	}
+
+	cout << "\nTk = " << T;
+
+	zapis.close();
+#pragma endregion
+
+
 #pragma region Ortogonalizacje
+/*
 #pragma region tworzenie_i_zerowanie_baz
+	
 	//baza funkcji. całość w postaci wielomianu :a0*1, a1*x, a2*x^2...a4*x^4
 	//tworzenie bazy
 	double** bazaF;
@@ -281,7 +316,7 @@ int main()
 		cout <<" \n";
 	}
 #pragma endregion
-
+*/
 #pragma region Reortogonalizacja_próba
 /*
 	bazaG2[0][0] = bazaG[0][0];
@@ -322,8 +357,6 @@ int main()
 #pragma endregion
 
 #pragma endregion
-
-
 #pragma region rozwiazanie_ukladu_rownan_gaussem
 	/*
 	double** A;//tworzenie tablicy 6x5 - transponowana jest
